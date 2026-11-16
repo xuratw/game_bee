@@ -14,19 +14,73 @@ h1{font-size:clamp(26px,5vw,40px);margin:0 0 6px}.subtitle{margin:0;color:#52647
 .part{background:#f5f7fb;border:2px solid transparent}.part.active{border-color:#839ed1;background:#eaf1ff}
 .game{display:grid;grid-template-columns:1.2fr .8fr;gap:16px}.quizbox{background:linear-gradient(145deg,#fff9e8,#fff);border:2px solid #fff0c8;border-radius:22px;padding:20px;text-align:center}.bigicon{font-size:54px}.prompt{font-size:23px;font-weight:800;margin:8px 0}.hint{color:var(--muted);font-size:14px}.answer{width:100%;max-width:430px;border:2px solid #8da6ce;border-radius:14px;padding:13px 15px;font-size:22px;text-align:center;letter-spacing:2px;margin:12px auto;color:#24364f !important;background:#ffffff !important;caret-color:#24364f;outline:none;box-shadow:inset 0 1px 3px #24364f12}.answer:focus{border-color:#526fae;box-shadow:0 0 0 3px #dce8ff}.answer::placeholder{color:#8794a6;opacity:1}.answer:disabled{color:#52647b !important;background:#f2f5f9 !important}.feedback{min-height:32px;font-weight:800;margin:7px 0}.good{color:#24835c}.bad{color:#b65a53}.side{background:linear-gradient(160deg,#f0eaff,#eaf8ff);border-radius:22px;padding:18px;text-align:center}.chest{font-size:76px;margin:12px 0}.progress{height:12px;background:#e9edf4;border-radius:20px;overflow:hidden;margin:8px 0}.bar{height:100%;width:0;background:linear-gradient(90deg,#80cfae,#f3c96a);transition:width .3s}.treasures{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;font-size:25px;min-height:35px}.wordlist{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:8px}.word{background:#f7f9fc;border-radius:10px;padding:8px 10px;font-size:14px}.word.done{background:#e6f6ec;text-decoration:line-through;color:#54806b}.small{font-size:13px;color:var(--muted)}.notice{background:#fff7dd;padding:12px;border-radius:13px;font-size:13px;color:#735f32;margin-top:12px}.hidden{display:none!important}
 @media(max-width:700px){.game{grid-template-columns:1fr}.panel{padding:15px}.hero{padding:18px}.mascot{font-size:44px}}
+
+/* Monster-training adventure theme */
+#next{display:none!important}
+
+.hero{background:linear-gradient(115deg,#d7f3ff,#e9e1ff 52%,#fff0c9);border:3px solid #fff;position:relative;overflow:hidden}
+.hero:after{content:"✦  ✧  ★";position:absolute;right:18%;bottom:8px;color:#ffffffaa;font-size:22px;letter-spacing:12px;pointer-events:none}
+.panel{border-color:#e8eaff}
+.quizbox{background:linear-gradient(145deg,#f0f8ff,#fff);border-color:#dce9ff}
+.side{background:linear-gradient(160deg,#f1eaff,#e8f8ff);border:2px solid #fff}
+.btn.primary{background:linear-gradient(135deg,#536fc1,#7959b8)}
+.trainer-panel{background:linear-gradient(135deg,#fff,#f0f5ff);border:2px solid #fff;border-radius:24px;padding:18px;margin-top:16px;box-shadow:0 6px 20px #52617a10}
+.starter-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:12px}
+.starter{border:2px solid #e2e8f5;border-radius:18px;background:#fff;padding:12px 8px;text-align:center;cursor:pointer;font:inherit;color:var(--ink);transition:.15s}
+.starter:hover{transform:translateY(-2px);box-shadow:0 5px 14px #52617a18}
+.starter.active{border-color:#6b83c5;background:#edf2ff;box-shadow:0 0 0 3px #dce6ff}
+.starter .creature{width:112px;height:112px;object-fit:contain;display:block;margin:0 auto 4px}.starter .creature-emoji{font-size:42px;display:block;margin-bottom:4px}.trainer-avatar img{width:76px;height:76px;object-fit:contain;vertical-align:middle}
+.starter small{display:block;color:var(--muted);font-size:12px}
+.trainer-status{display:flex;align-items:center;gap:12px;background:#fff;border-radius:16px;padding:12px;margin-top:12px}
+.trainer-avatar{font-size:44px;min-width:54px;text-align:center}
+.xp-track{height:9px;background:#e8edf6;border-radius:20px;overflow:hidden;margin-top:6px}
+.xp-fill{height:100%;width:0;background:linear-gradient(90deg,#79c9a7,#7d9fe8);transition:width .25s}
+.badge-row,.creature-collection{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}
+.gym-badge{background:#fff;border:1px solid #e7eaf2;border-radius:14px;padding:8px 10px;text-align:center;min-width:62px;font-size:12px;color:var(--muted)}
+.gym-badge.earned{background:#fff5ce;border-color:#edcf72;color:#765b16}
+.gym-badge b{display:block;font-size:23px}
+.creature-card{background:#fff;border:1px solid #e4e9f4;border-radius:14px;padding:9px 11px;min-width:100px;text-align:center;font-size:13px}
+.creature-card .creature{font-size:29px;display:block}
+.creature-card small{color:var(--muted)}
+.capture-pop{font-weight:800;color:#526fae}
+@media(max-width:520px){.starter-grid{grid-template-columns:1fr}.starter{display:flex;align-items:center;gap:12px;text-align:left}.starter .creature{width:76px;height:76px;margin:0}.starter .creature-emoji{margin:0;font-size:36px}.trainer-status{align-items:flex-start}}
+
 </style>
 </head>
 <body>
 <main>
 <header class="hero">
- <div><h1>🏝️ Alice 的單字冒險島</h1><p class="subtitle">聽一聽、拼一拼，收集寶物成為 Spelling 小達人！</p></div>
- <div class="mascot" aria-hidden="true">🦊🌈</div>
+ <div><h1>⚡ Alice 的寶可夢英文訓練之旅</h1><p class="subtitle">聽單字、拼英文、捕捉夥伴，一起成為最棒的單字訓練家！</p></div>
+ <div class="mascot" aria-hidden="true">🔥🦊⚡</div>
 </header>
 <section class="stats">
  <div class="stat"><strong id="points">0 ⭐</strong><span>冒險點數</span></div>
  <div class="stat"><strong id="solved">0 / 100</strong><span>已學會單字</span></div>
  <div class="stat"><strong id="streak">0 🔥</strong><span>連續答對</span></div>
  <div class="stat"><strong id="treasureCount">0 🎁</strong><span>收集寶物</span></div>
+</section>
+
+<section class="trainer-panel">
+ <h2 style="margin:0 0 4px">🧢 選擇你的初始夥伴</h2>
+ <p class="small">選一位夥伴陪 Alice 展開訓練之旅！使用寶可夢官方美術圖，答對單字可以獲得經驗值，讓夥伴一起成長。</p>
+ <div class="starter-grid" id="starterChoices">
+  <button class="starter" data-starter="ember"><img class="creature" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png" alt="皮卡丘"><span><b>皮卡丘</b><small>電氣屬性・活力十足</small></span></button>
+  <button class="starter" data-starter="bubbly"><img class="creature" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/133.png" alt="伊布"><span><b>伊布</b><small>一般屬性・可愛又機靈</small></span></button>
+  <button class="starter" data-starter="sprout"><span class="creature">🌿🐸</span><span><b>芽芽蛙</b><small>草葉屬性・活潑好奇</small></span></button>
+ </div>
+ <div class="trainer-status">
+  <div class="trainer-avatar" id="activeCreature">🥚</div>
+  <div style="flex:1;min-width:0">
+   <b id="activeCreatureName">尚未選擇夥伴</b>
+   <div class="small" id="trainerLevel">選擇夥伴後開始累積經驗值</div>
+   <div class="xp-track"><div class="xp-fill" id="xpFill"></div></div>
+   <div class="small" id="xpText">0 / 100 XP</div>
+  </div>
+ </div>
+ <h3 style="margin:14px 0 4px;font-size:16px">🏅 道館徽章</h3>
+ <div class="badge-row" id="gymBadges">
+  <div class="gym-badge"><b>🔥</b>火焰道館</div><div class="gym-badge"><b>💧</b>海洋道館</div><div class="gym-badge"><b>🌿</b>森林道館</div><div class="gym-badge"><b>⚡</b>雷電道館</div>
+ </div>
 </section>
 
 <section class="panel">
@@ -44,7 +98,7 @@ h1{font-size:clamp(26px,5vw,40px);margin:0 0 6px}.subtitle{margin:0;color:#52647
   <div class="quizbox">
    <div class="bigicon">🎧</div>
    <div class="prompt" id="prompt">準備好開始了嗎？</div>
-   <p class="hint" id="instruction">按「播放單字」，仔細聽，再把單字拼出來。</p>
+   <p class="hint" id="instruction">按「播放單字」，仔細聽，再把單字拼出來；答對會自動進入下一題。</p>
    <div class="actions" style="justify-content:center;margin:14px 0">
     <button class="btn gold" id="speak">🔊 播放單字</button>
     <button class="btn" id="spellHint">🔤 聽字母提示</button>
@@ -55,20 +109,30 @@ h1{font-size:clamp(26px,5vw,40px);margin:0 0 6px}.subtitle{margin:0;color:#52647
     <button class="btn mint" id="voice">🎙️ 用語音拼字</button>
     <button class="btn" id="next" disabled>下一題 ➜</button>
    </div>
+   <div class="actions" style="justify-content:center;margin-top:10px">
+    <button class="btn pink" id="restart">🔄 重新挑戰本關</button>
+    <button class="btn gold" id="missedOnly">🎯 只練習錯過的單字（0）</button>
+   </div>
    <div class="feedback" id="feedback" aria-live="polite"></div>
    <p class="small" id="voiceStatus">也可以用鍵盤輸入。語音辨識需使用支援的瀏覽器並允許麥克風。</p>
   </div>
   <aside class="side">
-   <h2>🎁 寶物收藏箱</h2>
-   <div class="chest" id="chest">🧰</div>
-   <p id="chestText">答對 3 題，就能開啟一個寶箱！</p>
+   <h2>🎯 夥伴捕捉站</h2>
+   <div class="chest" id="chest">🔴</div>
+   <p id="chestText">答對 3 個不同單字，就能獲得一顆捕捉球！</p>
    <button class="btn gold" id="openChest" disabled>🔒 還差 3 題</button>
    <div class="progress"><div class="bar" id="bar"></div></div>
-   <p class="small" id="progressText">距離下一個寶箱：3 題</p>
+   <p class="small" id="progressText">距離下一顆捕捉球：3 題</p>
    <div class="treasures" id="treasures">✨</div>
-   <p class="small" id="prizeText">收集到的寶物會展示在這裡。</p>
+   <p class="small" id="prizeText">捕捉到的夥伴會加入你的隊伍！</p>
   </aside>
  </div>
+</section>
+
+<section class="panel">
+ <h2>📖 夥伴圖鑑</h2>
+ <p class="small">使用捕捉球遇見新夥伴，看看你能收集多少種原創小精靈！</p>
+ <div class="creature-collection" id="creatureCollection"><div class="small">還沒有捕捉到其他夥伴，先完成單字挑戰吧！</div></div>
 </section>
 
 <section class="panel">
@@ -76,7 +140,7 @@ h1{font-size:clamp(26px,5vw,40px);margin:0 0 6px}.subtitle{margin:0;color:#52647
  <p class="small">答對的單字會在圖鑑中亮起來。可以隨時切換關卡複習。</p>
  <div class="wordlist" id="wordlist"></div>
 </section>
-<div class="notice">小提醒：語音功能使用瀏覽器內建的語音服務，建議以 Chrome 開啟並允許麥克風。若語音辨識不支援，仍可直接輸入答案；學習紀錄會保存在這台裝置的瀏覽器中。</div>
+<div class="notice">訓練家小提醒：每輪單字會隨機打亂，每個單字答對後才會進入下一題；答錯的單字會加入錯題複習。答對可獲得夥伴經驗值，每 3 個不同單字可獲得一顆捕捉球。收集的夥伴、經驗值與徽章進度會保存在這台裝置的瀏覽器中。語音功能建議以 Chrome 開啟並允許麥克風。</div>
 </main>
 <script>
 const lists = {
@@ -87,34 +151,113 @@ const lists = {
 };
 const all=Object.values(lists).flat();
 const $=id=>document.getElementById(id);
-let part=0,current="",points=0,streak=0,treasures=0,solved=new Set(),seen=new Set(),waiting=false,openedChests=0;
+let part=0,current="",points=0,streak=0,treasures=0,solved=new Set(),waiting=false,openedChests=0;
 let recognition=null;
+let missed=new Set(),questionQueue=[],queueIndex=0,practiceMode="all";
+let starterId="",xp=0,level=1,captured=[];
 try{
  const saved=JSON.parse(localStorage.getItem("aliceSpellingBee")||"{}");
  points=saved.points||0;streak=saved.streak||0;treasures=saved.treasures||0;openedChests=saved.openedChests||0;
  solved=new Set(saved.solved||[]);
+ missed=new Set(saved.missed||[]);
+ starterId=saved.starterId||"";xp=saved.xp||0;level=saved.level||1;captured=saved.captured||[];
 }catch(e){}
-function save(){try{localStorage.setItem("aliceSpellingBee",JSON.stringify({points,streak,treasures,openedChests,solved:[...solved]}))}catch(e){}}
+function save(){try{localStorage.setItem("aliceSpellingBee",JSON.stringify({points,streak,treasures,openedChests,solved:[...solved],missed:[...missed],starterId,xp,level,captured}))}catch(e){}}
+const starters={
+ ember:{name:"皮卡丘",emoji:"⚡🐭",image:"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png",type:"電氣"},
+ bubbly:{name:"伊布",emoji:"🦊🤎",image:"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/133.png",type:"一般"},
+ sprout:{name:"芽芽蛙",emoji:"🌿🐸",type:"草葉"}
+};
+const wildCreatures=[
+ {name:"電氣鼠",emoji:"⚡🐭",type:"雷電"},{name:"棉花兔",emoji:"☁️🐰",type:"普通"},
+ {name:"葉片鹿",emoji:"🍃🦌",type:"草葉"},{name:"泡泡水母",emoji:"🫧🪼",type:"水滴"},
+ {name:"熔岩蜥",emoji:"🌋🦎",type:"火焰"},{name:"星星貓",emoji:"⭐🐱",type:"星光"},
+ {name:"雪團熊",emoji:"❄️🐻",type:"冰霜"},{name:"小岩怪",emoji:"🪨🦔",type:"岩石"},
+ {name:"彩虹蝶",emoji:"🌈🦋",type:"幻彩"}
+];
+const gymNames=["火焰道館","海洋道館","森林道館","雷電道館"];
+const gymIcons=["🔥","💧","🌿","⚡"];
+function chooseStarter(id){
+ if(!starters[id])return;
+ starterId=id;save();renderTrainer();
+}
+function renderTrainer(){
+ document.querySelectorAll(".starter").forEach(b=>b.classList.toggle("active",b.dataset.starter===starterId));
+ const c=starters[starterId];
+ $("activeCreature").innerHTML=c?(c.image?`<img src="${c.image}" alt="${c.name}">`:c.emoji):"🥚";
+ $("activeCreatureName").textContent=c?c.name+"・"+c.type+"屬性":"尚未選擇夥伴";
+ $("trainerLevel").textContent=c?"夥伴等級 Lv."+level:"選擇夥伴後開始累積經驗值";
+ const into=xp%100;
+ $("xpFill").style.width=into+"%";
+ $("xpText").textContent=into+" / 100 XP（升級還需要 "+(100-into)+" XP）";
+ const badges=document.querySelectorAll("#gymBadges .gym-badge");
+ badges.forEach((b,i)=>{
+  const got=lists[i+1].every(w=>solved.has(w));
+  b.classList.toggle("earned",got);
+  b.innerHTML="<b>"+(got?"🏅":gymIcons[i])+"</b>"+gymNames[i]+(got?" 已獲得":" 未解鎖");
+ });
+ $("creatureCollection").innerHTML=captured.length
+  ?captured.map(x=>'<div class="creature-card"><span class="creature">'+x.emoji+'</span><b>'+x.name+'</b><br><small>'+x.type+'屬性</small></div>').join("")
+  :'<div class="small">還沒有捕捉到其他夥伴，先完成單字挑戰吧！</div>';
+}
+function gainXP(amount){
+ xp+=amount;
+ const nextLevel=Math.floor(xp/100)+1;
+ if(nextLevel>level){
+  level=nextLevel;
+  $("feedback").textContent+=" 🎉 夥伴升級了！現在是 Lv."+level+"！";
+ }
+}
 function update(){
  $("points").textContent=points+" ⭐";$("solved").textContent=solved.size+" / 100";
- $("streak").textContent=streak+" 🔥";$("treasureCount").textContent=treasures+" 🎁";
+ $("streak").textContent=streak+" 🔥";$("treasureCount").textContent=openedChests+" 🔴";
  const ready=treasures>openedChests;const n=solved.size%3;$("bar").style.width=(ready?100:(n/3*100))+"%";
- $("progressText").textContent=ready?"寶箱已準備好，快來開啟！":(n===0?"答對 3 題就能開寶箱！":"再答對 "+(3-n)+" 題就能開寶箱！");
- $("chest").textContent=ready?"🎁":"🧰";
+ $("progressText").textContent=ready?"捕捉球已準備好！":(n===0?"答對 3 個不同單字就能獲得捕捉球！":"再答對 "+(3-n)+" 個不同單字就能獲得捕捉球！");
+ $("chest").textContent=ready?"🔴":"⚪";
  $("chestText").textContent=ready?"太棒了！你有一個寶箱可以開啟！":"每累積答對 3 題，就能收集一個寶物！";
- $("openChest").disabled=!ready;$("openChest").textContent=ready?"🎉 開啟寶箱！":"🔒 還差 "+(3-n)+" 題";
- $("treasures").textContent=openedChests?Array.from({length:Math.min(openedChests,12)},(_,i)=>["💎","🪄","👑","🦄","🏆","🧸"][i%6]).join(" "):"✨";
- $("prizeText").textContent=openedChests?"已開啟 "+openedChests+" 個寶箱！":"收集到的寶物會展示在這裡。";
+ $("openChest").disabled=!ready;$("openChest").textContent=ready?"🔴 使用捕捉球！":"🔒 還差 "+(3-n)+" 題";
+ $("treasures").textContent=openedChests?Array.from({length:Math.min(openedChests,12)},(_,i)=>"🔴").join(" "):"✨";
+ $("prizeText").textContent=openedChests?"已使用 "+openedChests+" 顆捕捉球！":"捕捉到的夥伴會展示在圖鑑。";
+ $("missedOnly").textContent="🎯 只練習錯過的單字（"+pool().filter(w=>missed.has(w)).length+"）";
  renderWords();
+ renderTrainer();
 }
 function pool(){return part===0?all:lists[part]}
+function shuffle(items){
+ const result=[...items];
+ for(let i=result.length-1;i>0;i--){
+  const j=Math.floor(Math.random()*(i+1));
+  [result[i],result[j]]=[result[j],result[i]];
+ }
+ return result;
+}
+function beginRound(words,mode="all"){
+ practiceMode=mode;questionQueue=shuffle(words);queueIndex=0;waiting=false;
+ if(questionQueue.length===0){
+  current="";
+  $("prompt").textContent=mode==="missed"?"目前沒有錯過的單字！":"本關沒有單字。";
+  $("instruction").textContent=mode==="missed"?"先完成一般挑戰並答錯一些單字，就能在這裡複習。":"請選擇其他關卡。";
+  $("answer").value="";$("answer").disabled=true;
+  $("speak").disabled=true;$("spellHint").disabled=true;$("check").disabled=true;$("voice").disabled=true;$("next").disabled=true;
+  $("feedback").textContent="";update();return;
+ }
+ $("speak").disabled=false;$("spellHint").disabled=false;newQuestion();
+}
 function newQuestion(){
- const choices=pool();let options=choices.filter(w=>w!==current);
- if(!options.length)options=choices;
- current=options[Math.floor(Math.random()*options.length)];
- waiting=false;$("prompt").textContent="聽聽看，這個單字是什麼？";
- $("instruction").textContent="按「播放單字」，仔細聽，再把單字拼出來。";
- $("answer").value="";$("answer").disabled=false;$("check").disabled=false;$("voice").disabled=false;$("next").disabled=true;
+ if(queueIndex>=questionQueue.length){
+  current="";waiting=true;
+  $("prompt").textContent="🎉 本輪挑戰完成！";
+  $("instruction").textContent="太棒了！本輪每個單字都已經考過一次。";
+  $("answer").value="";$("answer").disabled=true;
+  $("speak").disabled=true;$("spellHint").disabled=true;$("check").disabled=true;$("voice").disabled=true;$("next").disabled=true;
+  $("feedback").textContent="完成 "+questionQueue.length+" 個單字！"+(practiceMode==="missed"?" 錯過的單字複習完成。":"");
+  $("feedback").className="feedback good";update();return;
+ }
+ current=questionQueue[queueIndex];waiting=false;
+ $("prompt").textContent="聽聽看，這個單字是什麼？";
+ $("instruction").textContent="第 "+(queueIndex+1)+" / "+questionQueue.length+" 題：按「播放單字」，仔細聽，再把單字拼出來；答對會自動進入下一題。";
+ $("answer").value="";$("answer").disabled=false;
+ $("speak").disabled=false;$("spellHint").disabled=false;$("check").disabled=false;$("voice").disabled=false;$("next").disabled=true;
  $("feedback").textContent="";$("feedback").className="feedback";$("answer").focus();
 }
 function say(text,rate=0.82){
@@ -128,28 +271,39 @@ function check(){
  if(waiting)return;
  const val=normalize($("answer").value);
  if(val===current){
-  waiting=true;points+=10;streak++;solved.add(current);
+  const isNewWord=!solved.has(current);waiting=true;points+=10;streak++;solved.add(current);gainXP(10);
+  if(practiceMode==="missed")missed.delete(current);
+  queueIndex++;
   let message="太棒了！答對了！ +10 ⭐";
   if(streak%3===0){points+=5;message+=" 連續答對 "+streak+" 題，額外 +5 ⭐！";}
-  if(solved.size%3===0){treasures++;message+=" 🎁 獲得一個寶箱！去旁邊按「開啟寶箱」領取寶物吧！";}
+  if(isNewWord && solved.size%3===0){treasures++;message+=" 🔴 獲得一顆捕捉球！去右側捕捉新夥伴吧！";}
   $("feedback").textContent=message;$("feedback").className="feedback good";
   $("prompt").textContent="✨ "+current;
   $("instruction").textContent="你成功拼出這個單字了！";
   $("answer").disabled=true;$("check").disabled=true;$("voice").disabled=true;$("next").disabled=false;
   save();update();say("Excellent! "+current,0.9);
+  $("instruction").textContent="答對了！即將自動進入下一題⋯";
+  window.setTimeout(()=>newQuestion(),900);
  }else{
-  streak=0;$("feedback").textContent="再試一次！聽聽看，慢慢拼就可以。";$("feedback").className="feedback bad";
+  streak=0;missed.add(current);
+  $("feedback").textContent="再試一次！這個單字已加入錯題複習。聽聽看，慢慢拼就可以。";$("feedback").className="feedback bad";
   $("answer").focus();save();update();
  }
 }
+$("starterChoices").addEventListener("click",e=>{
+ const b=e.target.closest("button[data-starter]");
+ if(b)chooseStarter(b.dataset.starter);
+});
 $("check").onclick=check;
 $("answer").addEventListener("keydown",e=>{if(e.key==="Enter")check()});
 $("next").onclick=newQuestion;
+$("restart").onclick=()=>beginRound(pool(),"all");
+$("missedOnly").onclick=()=>beginRound(pool().filter(w=>missed.has(w)),"missed");
 $("parts").addEventListener("click",e=>{
  const b=e.target.closest("button[data-part]");if(!b)return;
  part=Number(b.dataset.part);
  document.querySelectorAll(".part").forEach(x=>x.classList.toggle("active",x===b));
- newQuestion();renderWords();
+ beginRound(pool(),"all");
 });
 function renderWords(){
  const words=pool();$("wordlist").innerHTML=words.map(w=>`<div class="word ${solved.has(w)?"done":""}">${solved.has(w)?"⭐":"🔹"} ${w}</div>`).join("");
@@ -180,19 +334,23 @@ $("voice").onclick=startVoice;
 
 $("openChest").onclick=()=>{
  if(treasures<=openedChests)return;
- const prizes=["💎 閃亮寶石","🪄 魔法星星","👑 小小皇冠","🦄 獨角獸夥伴","🏆 勇氣獎盃","🧸 可愛泰迪熊"];
- const prize=prizes[openedChests%prizes.length];
+ const wild=wildCreatures[Math.floor(Math.random()*wildCreatures.length)];
+ const already=captured.some(x=>x.name===wild.name);
+ if(!already)captured.push(wild);
+ else gainXP(20);
  openedChests++;
- $("chest").textContent="🎉";
- $("chestText").textContent="恭喜你！你得到："+prize+"！";
- $("feedback").textContent="太棒了！成功開啟寶箱，獲得 "+prize+"！";
+ $("chest").textContent="✨";
+ $("chestText").textContent=already
+  ?"遇見 "+wild.name+"！牠已經在隊伍裡，轉化成 20 XP！"
+  :"捕捉成功！歡迎 "+wild.name+" 加入夥伴圖鑑！";
+ $("feedback").textContent=already
+  ?"夥伴 "+wild.name+" 再次出現，獲得 20 XP！"
+  :"太棒了！成功捕捉 "+wild.name+"！";
  $("feedback").className="feedback good";
  save();update();
- $("chest").textContent="🎁";
- $("chestText").textContent="恭喜！寶物已放進收藏箱。";
 };
 
-update();newQuestion();
+update();renderTrainer();beginRound(pool(),"all");
 </script>
 </body>
 </html>
