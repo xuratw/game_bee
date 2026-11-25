@@ -393,74 +393,60 @@ function newQuestion(){
  $("speak").disabled=false;$("spellHint").disabled=false;$("check").disabled=false;$("voice").disabled=false;$("next").disabled=true;
  $("feedback").textContent="";$("feedback").className="feedback";$("answer").focus();
 }
-function getEnglishVoice(){
- if(!("speechSynthesis" in window))return {voice:null,kind:"none"};
- const voices=speechSynthesis.getVoices();
- // 主要語音：Google UK English Male (en-GB)
- const primary=voices.find(v=>v.name.trim().toLowerCase()==="google uk english male" && /^en-GB$/i.test(v.lang));
- if(primary)return {voice:primary,kind:"primary"};
- // 備援：使用瀏覽器已提供的英文語音，不使用 Kokoro 或外部 MP3。
- const fallback=voices.find(v=>/^en-GB$/i.test(v.lang))
-  || voices.find(v=>/^en-(US|AU|IE|NZ|ZA)$/i.test(v.lang))
-  || voices.find(v=>/^en\b/i.test(v.lang));
- return fallback?{voice:fallback,kind:"fallback"}:{voice:null,kind:"none"};
+function getEnglishVoices(){
+ if(!('speechSynthesis' in window))return [];
+ const voices=window.speechSynthesis.getVoices();
+ const english=voices.filter(v=>/^en(?:-|$)/i.test(v.lang||''));
+ const primary=english.filter(v=>v.name.trim().toLowerCase()==='google uk english male' && /^en-GB$/i.test(v.lang));
+ const british=english.filter(v=>/^en-GB$/i.test(v.lang));
+ const others=english.filter(v=>!/^en-GB$/i.test(v.lang));
+ return [...new Map([...primary,...british,...others].map(v=>[v.name+'|'+v.lang,v])).values()];
 }
 function loadEnglishVoices(){
- if(!( "speechSynthesis" in window))return;
- const select=$("voiceSelect"), voices=speechSynthesis.getVoices();
- const selected=getEnglishVoice();
- select.innerHTML="";
- if(selected.voice){
-  const option=document.createElement("option");option.value=selected.voice.name;
-  option.textContent=selected.kind==="primary"
-   ?"Google UK English Male (en-GB)"
-   :"裝置英文語音備援："+selected.voice.name+" ("+selected.voice.lang+")";
-  select.appendChild(option);select.value=selected.voice.name;preferredVoiceName=selected.voice.name;
-  $("voiceStatus").textContent=selected.kind==="primary"
-   ?"英文語音：Google UK English Male (en-GB)"
-   :"目前裝置沒有 Google UK English Male，已自動改用英文語音："+selected.voice.name+" ("+selected.voice.lang+")";
+ if(!('speechSynthesis' in window))return;
+ const select=$('voiceSelect'), voices=getEnglishVoices();
+ select.innerHTML='';
+ const primary=voices.find(v=>v.name.trim().toLowerCase()==='google uk english male' && /^en-GB$/i.test(v.lang));
+ if(voices.length){
+  voices.forEach((v,i)=>{const o=document.createElement('option');o.value=v.name+'|'+v.lang;o.textContent=(i===0&&primary?'主要語音：Google UK English Male (en-GB)':'備援語音：'+v.name+' ('+v.lang+')');select.appendChild(o);});
+  select.selectedIndex=0;preferredVoiceName=voices[0].name;
+  $('voiceStatus').textContent=primary?'已找到主要語音：Google UK English Male (en-GB)。':'未找到 Google UK English Male，將依序嘗試裝置英文語音。';
  }else{
-  const option=document.createElement("option");option.value="";
-  option.textContent="目前沒有可用的英文語音";select.appendChild(option);
-  preferredVoiceName="";
-  $("voiceStatus").textContent="目前找不到可用的英文語音，請確認瀏覽器語音功能已啟用。";
+  const o=document.createElement('option');o.value='';o.textContent='目前沒有可用的英文語音';select.appendChild(o);preferredVoiceName='';
+  $('voiceStatus').textContent='尚未載入英文語音；請稍候再按播放。';
  }
- save();
 }
-if("speechSynthesis" in window){
- loadEnglishVoices();speechSynthesis.onvoiceschanged=loadEnglishVoices;
+if('speechSynthesis' in window){
+ loadEnglishVoices();window.speechSynthesis.onvoiceschanged=loadEnglishVoices;
 }
 function say(text,rate=0.88){
- if(!( "speechSynthesis" in window) || typeof SpeechSynthesisUtterance === "undefined"){
-  $("voiceStatus").textContent="此瀏覽器不支援語音播放，請使用最新版 Chrome 或 Edge。";return;
+ if(!('speechSynthesis' in window) || typeof SpeechSynthesisUtterance==='undefined'){
+  $('voiceStatus').textContent='此瀏覽器不支援語音播放，請使用最新版 Chrome 或 Edge。';return;
  }
  const synth=window.speechSynthesis;
- // Chrome on some computers loads its voice list asynchronously. Refresh it at playback time.
- let voices=synth.getVoices();
- let selected=getEnglishVoice();
- if(!selected.voice && voices.length===0){
-  $("voiceStatus").textContent="正在載入英文語音，請再按一次播放。";
-  synth.onvoiceschanged=()=>{loadEnglishVoices();};
-  return;
- }
- if(!selected.voice){
-  $("voiceStatus").textContent="找不到英文語音。請確認 Windows／瀏覽器已安裝英文語音，或改用 Chrome／Edge。";return;
- }
- synth.cancel();
- // resume() fixes a paused speech queue that can occur after a previous cancel().
- if(typeof synth.resume==="function")synth.resume();
- const u=new SpeechSynthesisUtterance(String(text));
- u.voice=selected.voice;u.lang=selected.voice.lang||"en-GB";u.rate=rate;u.pitch=1;u.volume=1;
- u.onstart=()=>{$("voiceStatus").textContent=selected.kind==="primary"?"正在播放：Google UK English Male (en-GB)":"正在播放備援英文語音："+selected.voice.name+" ("+selected.voice.lang+")";};
- u.onend=()=>{};
- u.onerror=(e)=>{$("voiceStatus").textContent="語音播放失敗（"+(e.error||"unknown")+"）。請確認裝置語音服務正常，再按一次播放。";};
- if(selected.kind==="primary")$("voiceStatus").textContent="語音：Google UK English Male (en-GB)";
- else $("voiceStatus").textContent="語音備援："+selected.voice.name+" ("+selected.voice.lang+")";
- synth.speak(u);
+ const voices=getEnglishVoices();
+ if(!voices.length){$('voiceStatus').textContent='瀏覽器尚未提供英文語音。請重新整理頁面後再試。';return;}
+ // 若主要 Google UK English Male 不存在，依序嘗試所有可用英文語音。
+ const selectedName=$('voiceSelect').value;
+ let ordered=voices.slice();
+ if(selectedName){const idx=ordered.findIndex(v=>v.name+'|'+v.lang===selectedName);if(idx>0)ordered=[ordered[idx],...ordered.slice(0,idx),...ordered.slice(idx+1)];}
+ let attempt=0;
+ const speakNext=()=>{
+  if(attempt>=ordered.length){$('voiceStatus').textContent='所有可用英文語音都播放失敗。請檢查 Windows 音訊輸出與 Chrome 語音服務。';return;}
+  const voice=ordered[attempt++];
+  const u=new SpeechSynthesisUtterance(String(text));
+  u.voice=voice;u.lang=voice.lang||'en-GB';u.rate=rate;u.pitch=1;u.volume=1;
+  u.onstart=()=>{$('voiceStatus').textContent='正在播放：'+voice.name+' ('+voice.lang+')';};
+  u.onerror=(e)=>{ $('voiceStatus').textContent='語音 '+voice.name+' 播放失敗（'+(e.error||'unknown')+'），正在嘗試下一個語音…';setTimeout(speakNext,120); };
+  u.onend=()=>{$('voiceStatus').textContent='播放完成：'+voice.name+' ('+voice.lang+')';};
+  try{synth.speak(u);}catch(e){setTimeout(speakNext,120);}
+ };
+ // Chrome 有時 cancel 後立即 speak 會無聲；只在佇列忙碌時才取消，並稍作等待。
+ if(synth.speaking||synth.pending){synth.cancel();setTimeout(()=>{try{synth.resume();}catch(e){}speakNext();},180);}
+ else{try{synth.resume();}catch(e){}speakNext();}
 }
-// Ensure the two playback controls are actually connected to the speech function.
-$("speak").onclick=()=>{if(current)say(current,0.88);};
-$("spellHint").onclick=()=>{if(current)say(current.split("").join(". "),0.78);};
+$('speak').addEventListener('click',()=>{if(current)say(current,0.88);});
+$('spellHint').addEventListener('click',()=>{if(current)say(current.split('').join('. '),0.78);});
 
 function normalize(s){return s.toLowerCase().replace(/[^a-z]/g,"")}
 function check(){
