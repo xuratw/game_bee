@@ -431,18 +431,36 @@ if("speechSynthesis" in window){
  loadEnglishVoices();speechSynthesis.onvoiceschanged=loadEnglishVoices;
 }
 function say(text,rate=0.88){
- if(!( "speechSynthesis" in window)){ $("voiceStatus").textContent="此瀏覽器不支援語音播放，請改用其他支援的瀏覽器。";return;}
- speechSynthesis.cancel();
- const selected=getEnglishVoice();
- if(!selected.voice){
-  $("voiceStatus").textContent="目前裝置沒有可用的英文語音，請確認瀏覽器已載入語音服務。";
+ if(!( "speechSynthesis" in window) || typeof SpeechSynthesisUtterance === "undefined"){
+  $("voiceStatus").textContent="此瀏覽器不支援語音播放，請使用最新版 Chrome 或 Edge。";return;
+ }
+ const synth=window.speechSynthesis;
+ // Chrome on some computers loads its voice list asynchronously. Refresh it at playback time.
+ let voices=synth.getVoices();
+ let selected=getEnglishVoice();
+ if(!selected.voice && voices.length===0){
+  $("voiceStatus").textContent="正在載入英文語音，請再按一次播放。";
+  synth.onvoiceschanged=()=>{loadEnglishVoices();};
   return;
  }
- const u=new SpeechSynthesisUtterance(text);u.voice=selected.voice;u.lang=selected.voice.lang||"en-GB";u.rate=rate;u.pitch=1;u.volume=1;
- if(selected.kind==="primary")$("voiceStatus").textContent="英文語音：Google UK English Male (en-GB)";
- else $("voiceStatus").textContent="備援語音："+selected.voice.name+" ("+selected.voice.lang+")";
- speechSynthesis.speak(u);
+ if(!selected.voice){
+  $("voiceStatus").textContent="找不到英文語音。請確認 Windows／瀏覽器已安裝英文語音，或改用 Chrome／Edge。";return;
+ }
+ synth.cancel();
+ // resume() fixes a paused speech queue that can occur after a previous cancel().
+ if(typeof synth.resume==="function")synth.resume();
+ const u=new SpeechSynthesisUtterance(String(text));
+ u.voice=selected.voice;u.lang=selected.voice.lang||"en-GB";u.rate=rate;u.pitch=1;u.volume=1;
+ u.onstart=()=>{$("voiceStatus").textContent=selected.kind==="primary"?"正在播放：Google UK English Male (en-GB)":"正在播放備援英文語音："+selected.voice.name+" ("+selected.voice.lang+")";};
+ u.onend=()=>{};
+ u.onerror=(e)=>{$("voiceStatus").textContent="語音播放失敗（"+(e.error||"unknown")+"）。請確認裝置語音服務正常，再按一次播放。";};
+ if(selected.kind==="primary")$("voiceStatus").textContent="語音：Google UK English Male (en-GB)";
+ else $("voiceStatus").textContent="語音備援："+selected.voice.name+" ("+selected.voice.lang+")";
+ synth.speak(u);
 }
+// Ensure the two playback controls are actually connected to the speech function.
+$("speak").onclick=()=>{if(current)say(current,0.88);};
+$("spellHint").onclick=()=>{if(current)say(current.split("").join(". "),0.78);};
 
 function normalize(s){return s.toLowerCase().replace(/[^a-z]/g,"")}
 function check(){
